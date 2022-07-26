@@ -1,4 +1,4 @@
-This mod adds a disconnect sound located in your "UserData/dc.ogg" to the game whenever you disconnect from an instance.
+This mod adds a disconnect sound located in your "UserData/dc.ogg" to the game whenever you disconnect from the gameserver be.
 
 <b>Installation:</b> Unpack the zip in your ChilloutVR game folder
 
