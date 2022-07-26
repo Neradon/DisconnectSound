@@ -22,8 +22,11 @@ namespace DisconnectSound
         private AudioSource _audioSource;
         private void Test(object sender, DisconnectedEventArgs e)
         {
-            LoggerInstance.Msg("Playing Disconnected Sound");
-            _audioSource.Play();
+            if (e != null)
+            {
+                LoggerInstance.Msg("Playing Disconnected Sound");
+                _audioSource.Play();
+            }
         }
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
@@ -51,7 +54,7 @@ namespace DisconnectSound
                     var manager = GameObject.Find("SteamManager");
                     _audioSource = manager.AddComponent<AudioSource>();
                     _audioSource.clip = testAudio;
-                    _audioSource.volume = 0.5f;
+                    _audioSource.volume = 0.35f;
                     
                     NetworkManager.Instance.GameNetwork.Disconnected += Test;
                     // use audio clip
