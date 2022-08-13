@@ -41,7 +41,6 @@ namespace DisconnectSound
             {
                 WWW webReq = new WWW("File://" + path);
                 yield return webReq;
-                _audioSource = GameObject.Find("SteamManager").AddComponent<AudioSource>();
                 GenerateAudioSource(webReq.GetAudioClip(false, false));
                 yield break;
             }
