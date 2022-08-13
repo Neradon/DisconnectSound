@@ -22,24 +22,21 @@ namespace DisconnectSound
         private AudioSource _audioSource;
         private void Test(object sender, DisconnectedEventArgs e)
         {
-            if (e != null)
-            {
-                LoggerInstance.Msg("Playing Disconnected Sound");
-                _audioSource.Play();
-            }
+            if (e == null) return;
+             LoggerInstance.Msg("Playing Disconnected Sound");
+             _audioSource.Play();
         }
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
-            //Wait till we loaded the first scene
             if (buildIndex == 3)
-            {
-                MelonCoroutines.Start(InitAudio());
-            }
+                MelonCoroutines.Start(InitAudio());  
         }
 
         private IEnumerator InitAudio()
         {
+
+
             if (File.Exists("UserData/dc.ogg"))
             {
                 using (var uwr = UnityWebRequestMultimedia.GetAudioClip($"file://{Path.Combine(Environment.CurrentDirectory, "UserData/dc.ogg")}", AudioType.OGGVORBIS)) {
@@ -48,16 +45,12 @@ namespace DisconnectSound
                         Debug.LogError(uwr.error);
                         yield break;
                     }
-
                     AudioClip testAudio = DownloadHandlerAudioClip.GetContent(uwr);
                     testAudio.hideFlags |= HideFlags.DontUnloadUnusedAsset;
-                    var manager = GameObject.Find("SteamManager");
-                    _audioSource = manager.AddComponent<AudioSource>();
+                    _audioSource = GameObject.Find("SteamManager").AddComponent<AudioSource>();
                     _audioSource.clip = testAudio;
                     _audioSource.volume = 0.35f;
-                    
                     NetworkManager.Instance.GameNetwork.Disconnected += Test;
-                    // use audio clip
                 }
             }
             else
